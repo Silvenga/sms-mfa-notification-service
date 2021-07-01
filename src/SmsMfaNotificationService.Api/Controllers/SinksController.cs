@@ -3,7 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using SmsMfaNotificationService.Api.Actions.Commands;
+using SmsMfaNotificationService.Api.Formatters.Tasker;
 
 namespace SmsMfaNotificationService.Api.Controllers
 {
@@ -11,16 +13,18 @@ namespace SmsMfaNotificationService.Api.Controllers
     public class SinksController : ControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<SinksController> _logger;
 
-        public SinksController(IMediator mediator)
+        public SinksController(IMediator mediator, ILogger<SinksController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpPost("sms-received/tasker")]
         public async Task<IActionResult> SmsReceivedTasker([FromHeader(Name = "X-Client-Id"), Required]
                                                            string clientId,
-                                                           [FromBody] string payload,
+                                                           [FromBody] TaskerSmsReceived payload,
                                                            CancellationToken cancellationToken)
         {
             var command = new SmsReceived.Command(clientId, payload);

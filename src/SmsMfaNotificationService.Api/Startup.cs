@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SmsMfaNotificationService.Api.Formatters.Tasker;
 using SmsMfaNotificationService.Api.Hubs;
 
 namespace SmsMfaNotificationService.Api
@@ -11,7 +12,7 @@ namespace SmsMfaNotificationService.Api
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(o => o.InputFormatters.Insert(o.InputFormatters.Count, new TaskerSmsInputFormatter()));
             services.AddMediatR(typeof(Startup));
             services.AddSignalR();
             services.AddHealthChecks();
