@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
+using SmsMfaNotificationService.Api.Helpers;
 
 namespace SmsMfaNotificationService.Api.Hubs
 {
     public interface INotificationsClient
     {
-        Task ReceiveMessage(string message);
+        Task ReceiveMfaCode(MfaCodeReceived payload);
     }
 
     public class NotificationsHub : Hub<INotificationsClient>
@@ -33,25 +32,11 @@ namespace SmsMfaNotificationService.Api.Hubs
             return base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessage(string clientId, string message)
-        {
-            var groupName = GetGroup(clientId);
-            await Clients.Group(groupName).ReceiveMessage(message);
-        }
-
         public async Task SubscribeToClientId(string clientId)
         {
-            var groupName = GetGroup(clientId);
+            var groupName = NotificationsHubHelper.ClientIdToGroupName(clientId);
             _logger.LogInformation($"Client '{Context.ConnectionId}' requested subscription to group '{groupName}'.");
             await Groups.AddToGroupAsync(Context.ConnectionId, groupName);
-        }
-
-        private static string GetGroup(string clientId)
-        {
-            using var sha256 = SHA256.Create();
-            var hash = sha256.ComputeHash(Encoding.UTF8.GetBytes(clientId));
-            var groupName = Convert.ToBase64String(hash);
-            return groupName;
         }
     }
 }
