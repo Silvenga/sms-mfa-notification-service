@@ -17,5 +17,5 @@ jobs:
         dockerRegistery: ghcr.io
         dockerUserName: ${{ secrets.GHCR_USER }}
         dockerPassword: ${{ secrets.GHCR_PAT }}
-        dockerImageName: ${{ github.repository }}
+        dockerImageName: silvenga/sms-mfa-notification-service/api
         dockerTags: latest,${{ github.sha }}
