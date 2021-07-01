@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmsMfaNotificationService.Api.Tests", "tests\SmsMfaNotificationService.Api.Tests\SmsMfaNotificationService.Api.Tests.csproj", "{6AF0855D-E508-4D19-9108-47EF41829324}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmsMfaNotificationService.Api", "src\SmsMfaNotificationService.Api\SmsMfaNotificationService.Api.csproj", "{9C546C5B-DD10-4C10-A5BC-F14C58575880}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AF0855D-E508-4D19-9108-47EF41829324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AF0855D-E508-4D19-9108-47EF41829324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AF0855D-E508-4D19-9108-47EF41829324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AF0855D-E508-4D19-9108-47EF41829324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C546C5B-DD10-4C10-A5BC-F14C58575880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C546C5B-DD10-4C10-A5BC-F14C58575880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C546C5B-DD10-4C10-A5BC-F14C58575880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C546C5B-DD10-4C10-A5BC-F14C58575880}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9486C853-355B-4CF6-ACC3-9BE365293CB4}
+	EndGlobalSection
+EndGlobal
