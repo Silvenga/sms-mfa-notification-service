@@ -18,7 +18,8 @@ namespace SmsMfaNotificationService.Api.Controllers
         }
 
         [HttpPost("sms-received/tasker")]
-        public async Task<IActionResult> SmsReceivedTasker([FromHeader, Required] string clientId,
+        public async Task<IActionResult> SmsReceivedTasker([FromHeader(Name = "X-Client-Id"), Required]
+                                                           string clientId,
                                                            [FromBody] string payload,
                                                            CancellationToken cancellationToken)
         {
