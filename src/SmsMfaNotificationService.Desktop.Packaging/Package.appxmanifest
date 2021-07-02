@@ -10,7 +10,7 @@
 
   <Identity
     Name="613603b8-8c9d-43e4-8b8b-c669101ac9c5"
-    Publisher="CN=SMS MFA Notification Service, O=Slvn Self-Signed, C=US"
+    Publisher="CN=SMS MFA Notification Service, O=Slvn Code Signing - Vault"
     Version="1.0.0.0" />
 
   <Properties>

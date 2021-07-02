@@ -38,21 +38,13 @@ jobs:
           /p:UapAppxPackageBuildMode=$env:BuildMode `
           /p:AppxBundle=$env:AppxBundle `
           /p:AppInstallerUri=$env:AppInstallerUri `
-          /p:PackageCertificateKeyFile=$env:SigningCertificate `
-          /p:PackageCertificatePassword=$env:PackageCertificatePassword
+          /p:AppxPackageSigningEnabled=$env:AppxPackageSigningEnabled
       env:
         AppxBundle: Never
         AppInstallerUri: https://github.com/Silvenga/sms-mfa-notification-service
         BuildMode: SideloadOnly
         GenerateAppInstallerFile: True
-        SigningCertificate: certificate.pfx
-        PackageCertificatePassword: ${{ secrets.PFX_PASSWORD }}
-    - name: Package
-      shell: pwsh
-      run: |
-        Compress-Archive `
-          -Path src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\* `
-          -DestinationPath SmsMfaNotificationService.Desktop.Packaging.zip
+        AppxPackageSigningEnabled: false
     - name: Publish (Artifacts - Zip)
       uses: actions/upload-artifact@v2
       with:
