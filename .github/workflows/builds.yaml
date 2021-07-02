@@ -37,10 +37,12 @@ jobs:
           /p:Configuration=Release `
           /p:UapAppxPackageBuildMode=$env:BuildMode `
           /p:AppxBundle=$env:AppxBundle `
+          /p:AppInstallerUri=$env:AppInstallerUri `
           /p:PackageCertificateKeyFile=$env:SigningCertificate `
           /p:PackageCertificatePassword=$env:PackageCertificatePassword
       env:
         AppxBundle: Never
+        AppInstallerUri: https://github.com/Silvenga/sms-mfa-notification-service
         BuildMode: SideloadOnly
         GenerateAppInstallerFile: True
         SigningCertificate: certificate.pfx
