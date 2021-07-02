@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows10.0.17763.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
+    <AppxBundle>Always</AppxBundle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="..\..\assets\icon-white.ico" Link="Assets\icon-white.ico" />
+    <Resource Include="..\..\assets\icon.ico" Link="Assets\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hardcodet.NotifyIcon.Wpf.NetCore" Version="1.0.18" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.7" />
+    <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.0.2" />
+    <PackageReference Include="TextCopy" Version="4.3.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\" />
+  </ItemGroup>
+
+</Project>

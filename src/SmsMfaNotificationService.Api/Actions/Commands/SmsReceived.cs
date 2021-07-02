@@ -36,9 +36,11 @@ namespace SmsMfaNotificationService.Api.Actions.Commands
 
                 if (MessageParser.TryGetCode(request.Message, out var code))
                 {
-                    _logger.LogTrace($"Successfully parse code '{code}'.");
+                    _logger.LogTrace($"Successfully parsed code '{code}'.");
+
                     var groupName = NotificationsHubHelper.ClientIdToGroupName(request.ClientId);
                     _notificationsHubContext.Clients.Group(groupName).ReceiveMfaCode(new MfaCodeReceived(request.PhoneNumber, code, request.Message));
+                    _logger.LogTrace($"Sent notification to group '{groupName}'.");
                 }
 
                 return Task.FromResult<Result>(new SuccessfulResult());

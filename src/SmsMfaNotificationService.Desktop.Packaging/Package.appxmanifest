@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:com="http://schemas.microsoft.com/appx/manifest/com/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  IgnorableNamespaces="uap rescap com desktop">
+
+  <Identity
+    Name="613603b8-8c9d-43e4-8b8b-c669101ac9c5"
+    Publisher="CN=SMS MFA Notification Service, O=Slvn Self-Signed, C=US"
+    Version="1.0.0.0" />
+
+  <Properties>
+    <DisplayName>SMS MFA Notification Service</DisplayName>
+    <PublisherDisplayName>Slvn</PublisherDisplayName>
+    <Logo>Images\StoreLogo.png</Logo>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="en-us" />
+  </Resources>
+
+  <Applications>
+    <Application Id="App"
+      Executable="SmsMfaNotificationService.Desktop\SmsMfaNotificationService.Desktop.exe"
+      EntryPoint="Windows.FullTrustApplication">
+
+      <uap:VisualElements
+        DisplayName="SMS MFA Notification Service"
+        Description="SMS MFA Notification Service"
+        BackgroundColor="transparent"
+        Square150x150Logo="Images\Square150x150Logo.png"
+        Square44x44Logo="Images\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Images\Wide310x150Logo.png"  Square71x71Logo="Images\SmallTile.png" Square310x310Logo="Images\LargeTile.png"/>
+        <uap:SplashScreen Image="Images\SplashScreen.png" />
+        <uap:LockScreen Notification="badge" BadgeLogo="Images\BadgeLogo.png"/>
+      </uap:VisualElements>
+
+      <Extensions>
+
+        <com:Extension Category="windows.comServer">
+          <com:ComServer>
+            <com:ExeServer Executable="SmsMfaNotificationService.Desktop\SmsMfaNotificationService.Desktop.exe" Arguments="-ToastActivated" DisplayName="Toast activator">
+              <com:Class Id="818da1fb-6e05-4147-8c86-5fc837ada4ec" DisplayName="Toast activator"/>
+            </com:ExeServer>
+          </com:ComServer>
+        </com:Extension>
+
+        <desktop:Extension Category="windows.toastNotificationActivation">
+          <desktop:ToastNotificationActivation ToastActivatorCLSID="818da1fb-6e05-4147-8c86-5fc837ada4ec" />
+        </desktop:Extension>
+
+        <desktop:Extension
+          Category="windows.startupTask"
+          Executable="SmsMfaNotificationService.Desktop\SmsMfaNotificationService.Desktop.exe"
+          EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask
+            TaskId="73ebe791-df70-4d40-93f7-7177b6eef6d4"
+            Enabled="true"
+            DisplayName="SMS MFA Notification Service" />
+        </desktop:Extension>
+
+      </Extensions>
+
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>

@@ -8,7 +8,7 @@ on:
     - '*'
 
 jobs:
-  build:
+  api:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,3 +19,29 @@ jobs:
         dockerPassword: ${{ secrets.GHCR_PAT }}
         dockerImageName: silvenga/sms-mfa-notification-service/api
         dockerTags: latest,${{ github.sha }}
+  desktop:
+    runs-on: windows-latest
+    steps:
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@v1
+    - uses: actions/checkout@v2
+    - name: Clean install dependencies and build
+      shell: pwsh
+      run: |
+        msbuild src\SmsMfaNotificationService.Desktop.Packaging/SmsMfaNotificationService.Desktop.Packaging.wapproj `
+          /t:Restore,Build `
+          /p:Configuration=Release `
+          /p:UapAppxPackageBuildMode=$env:BuildMode `
+          /p:AppxBundle=$env:AppxBundle `
+          /p:PackageCertificateKeyFile=$env:SigningCertificate `
+          /p:PackageCertificatePassword=$env:PackageCertificatePassword
+      env:
+        AppxBundle: Never
+        BuildMode: SideloadOnly
+        GenerateAppInstallerFile: True
+        SigningCertificate: certificate.pfx
+        PackageCertificatePassword: ${{ secrets.PFX_PASSWORD }}
