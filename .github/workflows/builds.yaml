@@ -29,10 +29,10 @@ jobs:
     - name: Setup MSBuild.exe
       uses: microsoft/setup-msbuild@v1
     - uses: actions/checkout@v2
-    - name: Clean install dependencies and build
+    - name: Build
       shell: pwsh
       run: |
-        msbuild src\SmsMfaNotificationService.Desktop.Packaging/SmsMfaNotificationService.Desktop.Packaging.wapproj `
+        msbuild src\SmsMfaNotificationService.Desktop.Packaging\SmsMfaNotificationService.Desktop.Packaging.wapproj `
           /t:Restore,Build `
           /p:Configuration=Release `
           /p:UapAppxPackageBuildMode=$env:BuildMode `
@@ -47,3 +47,19 @@ jobs:
         GenerateAppInstallerFile: True
         SigningCertificate: certificate.pfx
         PackageCertificatePassword: ${{ secrets.PFX_PASSWORD }}
+    - name: Package
+      shell: pwsh
+      run: |
+        Compress-Archive `
+          -Path src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\* `
+          -DestinationPath SmsMfaNotificationService.Desktop.Packaging.zip
+    - name: Publish (Artifacts - Zip)
+      uses: actions/upload-artifact@v2
+      with:
+        name: AppPackages
+        path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\
+    - name: Publish (Artifacts - Msix)
+      uses: actions/upload-artifact@v2
+      with:
+        name: Msix
+        path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\**\*.msix
