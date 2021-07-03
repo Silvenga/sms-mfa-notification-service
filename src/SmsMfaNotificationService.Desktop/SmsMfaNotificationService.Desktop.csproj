@@ -6,7 +6,23 @@
     <UseWPF>true</UseWPF>
     <RuntimeIdentifiers>win-x86;win-x64</RuntimeIdentifiers>
     <AppxBundle>Always</AppxBundle>
+    <nullable>enable</nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="DefaultSettings.yaml" />
+    <None Remove="NLog.config" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="DefaultSettings.yaml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Resource Include="..\..\assets\icon-white.ico" Link="Assets\icon-white.ico" />
@@ -18,6 +34,8 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="5.0.7" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.0.2" />
     <PackageReference Include="TextCopy" Version="4.3.1" />
+    <PackageReference Include="NLog" Version="4.7.10" />
+    <PackageReference Include="YamlDotNet" Version="11.2.1" />
   </ItemGroup>
 
   <ItemGroup>

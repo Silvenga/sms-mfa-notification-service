@@ -1,0 +1,5 @@
+﻿# Settings for the SMS MFA Notification Service application.
+# Changes here require restarting the service.
+
+ClientId: example shared client id
+NotificationHost: http://example.com:8080
