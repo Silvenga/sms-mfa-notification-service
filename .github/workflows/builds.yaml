@@ -35,14 +35,16 @@ jobs:
         msbuild src\SmsMfaNotificationService.Desktop.Packaging\SmsMfaNotificationService.Desktop.Packaging.wapproj `
           /t:Restore,Build `
           /p:Configuration=Release `
+          /p:AppxBundlePlatforms=$env:AppxBundlePlatforms `
           /p:UapAppxPackageBuildMode=$env:BuildMode `
           /p:AppxBundle=$env:AppxBundle `
           /p:AppInstallerUri=$env:AppInstallerUri `
           /p:AppxPackageSigningEnabled=$env:AppxPackageSigningEnabled
       env:
+        AppxBundlePlatforms: x86
         AppxBundle: Never
         AppInstallerUri: https://github.com/Silvenga/sms-mfa-notification-service
-        BuildMode: SideloadOnly
+        BuildMode: StoreUpload
         GenerateAppInstallerFile: True
         AppxPackageSigningEnabled: false
     - name: Publish (Artifacts - Zip)
