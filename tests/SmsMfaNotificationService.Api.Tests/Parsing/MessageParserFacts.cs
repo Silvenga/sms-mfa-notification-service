@@ -18,7 +18,7 @@ namespace SmsMfaNotificationService.Api.Tests.Parsing
         [InlineData("From: SoFi\nReminder: SoFi will never ask for your code on a call not initiated by you\nOne-Time Code: 000000", "000000")]
         [InlineData("Example1 000-000", "000000")]
         [InlineData("Example2 000 - 000", "000000")]
-        public void Given_examples_parse_mfa_code(string input, string expected)
+        public void Given_example_containing_sms_code_then_return_true(string input, string expected)
         {
             // Act
             var result = MessageParser.TryGetCode(input, out var code);
@@ -29,6 +29,18 @@ namespace SmsMfaNotificationService.Api.Tests.Parsing
                 result.Should().BeTrue();
                 code.Should().Be(expected);
             }
+        }
+
+        [Theory]
+        [InlineData("Example2 CA 11111")]
+        [InlineData("Example2 CA, 11111")]
+        public void Given_message_containing_an_address_then_return_false(string input)
+        {
+            // Act
+            var result = MessageParser.TryGetCode(input, out _);
+
+            // Assert
+            result.Should().BeFalse();
         }
     }
 }
