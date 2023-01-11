@@ -16,6 +16,8 @@ namespace SmsMfaNotificationService.Api.Tests.Parsing
         [InlineData("G-000000 is your Google verification code.", "000000")]
         [InlineData("PayPal: Your security code is: 000000. It expires in 10 minutes. Don't share this code with anyone.", "000000")]
         [InlineData("From: SoFi\nReminder: SoFi will never ask for your code on a call not initiated by you\nOne-Time Code: 000000", "000000")]
+        [InlineData("00000 is your Shop Pay verification code", "00000")]
+        [InlineData("If someone asks for the code, it's a scam. Your code is 0000.", "0000")]
         [InlineData("Example1 000-000", "000000")]
         [InlineData("Example2 000 - 000", "000000")]
         public void Given_example_containing_sms_code_then_return_true(string input, string expected)
