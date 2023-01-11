@@ -5,55 +5,57 @@ on:
     branches:
       - master
     tags:
-    - '*'
+      - "*"
 
 jobs:
   api:
+    permissions:
+      packages: write
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: silvenga-docker/build-image@latest
-      with:
-        dockerRegistery: ghcr.io
-        dockerUserName: ${{ secrets.GHCR_USER }}
-        dockerPassword: ${{ secrets.GHCR_PAT }}
-        dockerImageName: silvenga/sms-mfa-notification-service/api
-        dockerTags: latest,${{ github.sha }}
+      - uses: actions/checkout@v2
+      - uses: silvenga-docker/build-image@latest
+        with:
+          dockerRegistery: ghcr.io
+          dockerUserName: ${{ github.actor }}
+          dockerPassword: ${{ secrets.GITHUB_TOKEN }}
+          dockerImageName: silvenga/sms-mfa-notification-service/api
+          dockerTags: latest,${{ github.sha }}
   desktop:
     runs-on: windows-latest
     steps:
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '6.0.x'
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1
-    - uses: actions/checkout@v2
-    - name: Build
-      shell: pwsh
-      run: |
-        msbuild src\SmsMfaNotificationService.Desktop.Packaging\SmsMfaNotificationService.Desktop.Packaging.wapproj `
-          /t:Restore,Build `
-          /p:Configuration=Release `
-          /p:AppxBundlePlatforms=$env:AppxBundlePlatforms `
-          /p:UapAppxPackageBuildMode=$env:BuildMode `
-          /p:AppxBundle=$env:AppxBundle `
-          /p:AppInstallerUri=$env:AppInstallerUri `
-          /p:AppxPackageSigningEnabled=$env:AppxPackageSigningEnabled
-      env:
-        AppxBundlePlatforms: x86
-        AppxBundle: Never
-        AppInstallerUri: https://github.com/Silvenga/sms-mfa-notification-service
-        BuildMode: StoreUpload
-        GenerateAppInstallerFile: True
-        AppxPackageSigningEnabled: false
-    - name: Publish (Artifacts - Zip)
-      uses: actions/upload-artifact@v2
-      with:
-        name: AppPackages
-        path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\
-    - name: Publish (Artifacts - Msix)
-      uses: actions/upload-artifact@v2
-      with:
-        name: Msix
-        path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\**\*.msix
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: "6.0.x"
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1
+      - uses: actions/checkout@v2
+      - name: Build
+        shell: pwsh
+        run: |
+          msbuild src\SmsMfaNotificationService.Desktop.Packaging\SmsMfaNotificationService.Desktop.Packaging.wapproj `
+            /t:Restore,Build `
+            /p:Configuration=Release `
+            /p:AppxBundlePlatforms=$env:AppxBundlePlatforms `
+            /p:UapAppxPackageBuildMode=$env:BuildMode `
+            /p:AppxBundle=$env:AppxBundle `
+            /p:AppInstallerUri=$env:AppInstallerUri `
+            /p:AppxPackageSigningEnabled=$env:AppxPackageSigningEnabled
+        env:
+          AppxBundlePlatforms: x86
+          AppxBundle: Never
+          AppInstallerUri: https://github.com/Silvenga/sms-mfa-notification-service
+          BuildMode: StoreUpload
+          GenerateAppInstallerFile: True
+          AppxPackageSigningEnabled: false
+      - name: Publish (Artifacts - Zip)
+        uses: actions/upload-artifact@v2
+        with:
+          name: AppPackages
+          path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\
+      - name: Publish (Artifacts - Msix)
+        uses: actions/upload-artifact@v2
+        with:
+          name: Msix
+          path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\**\*.msix
