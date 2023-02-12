@@ -13,7 +13,7 @@ jobs:
       packages: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: silvenga-docker/build-image@latest
         with:
           dockerRegistery: ghcr.io
@@ -30,7 +30,7 @@ jobs:
           dotnet-version: "6.0.x"
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Build
         shell: pwsh
         run: |
