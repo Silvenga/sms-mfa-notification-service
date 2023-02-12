@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0.405 AS builder
 
 WORKDIR /source
 COPY src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj
@@ -15,7 +15,7 @@ RUN set -ex \
     && dotnet test --configuration Release tests/SmsMfaNotificationService.Api.Tests/SmsMfaNotificationService.Api.Tests.csproj \
     && dotnet publish src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj --output /app/ --configuration Release
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.13
 WORKDIR /app
 COPY --from=builder /app .
 
