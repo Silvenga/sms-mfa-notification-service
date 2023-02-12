@@ -50,12 +50,12 @@ jobs:
           GenerateAppInstallerFile: True
           AppxPackageSigningEnabled: false
       - name: Publish (Artifacts - Zip)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: AppPackages
           path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\
       - name: Publish (Artifacts - Msix)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Msix
           path: src\SmsMfaNotificationService.Desktop.Packaging\AppPackages\**\*.msix
