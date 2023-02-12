@@ -18,4 +18,7 @@ RUN set -ex \
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=builder /app .
+
+LABEL org.opencontainers.image.source https://github.com/Silvenga/sms-mfa-notification-service
+
 ENTRYPOINT ["dotnet", "SmsMfaNotificationService.Api.dll"]
