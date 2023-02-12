@@ -56,13 +56,21 @@ namespace SmsMfaNotificationService.Desktop
             await _connection.DisposeAsync();
         }
 
-        private Task OnReconnecting(Exception arg)
+        private Task OnReconnecting(Exception? arg)
         {
-            Logger.Debug(arg, "An error occured, attempting to reconnect to hub.");
+            if (arg != null)
+            {
+                Logger.Debug(arg, "An error occured, attempting to reconnect to hub.");
+            }
+            else
+            {
+                Logger.Debug("An error occured, attempting to reconnect to hub.");
+            }
+
             return Task.CompletedTask;
         }
 
-        private async Task OnReconnected(string arg)
+        private async Task OnReconnected(string? arg)
         {
             Logger.Debug("Reconnected to hub after failure, adding subscriptions.");
             await _connection.SendAsync("SubscribeToClientId", _clientId);

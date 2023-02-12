@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using Hardcodet.Wpf.TaskbarNotification;
+using H.NotifyIcon;
 using Microsoft.Toolkit.Uwp.Notifications;
 using NLog;
 using SmsMfaNotificationService.Desktop.Models;
