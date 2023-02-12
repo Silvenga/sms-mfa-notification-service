@@ -27,7 +27,8 @@ namespace SmsMfaNotificationService.Api.Formatters.Tasker
         public override bool CanRead(InputFormatterContext context)
         {
             var contentType = context.HttpContext.Request.ContentType;
-            return contentType.StartsWith(ContentType)
+            return contentType != null
+                   && contentType.StartsWith(ContentType)
                    && context.ModelType == typeof(TaskerSmsReceived);
         }
     }
