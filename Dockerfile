@@ -15,7 +15,7 @@ RUN set -ex \
     && dotnet test --configuration Release tests/SmsMfaNotificationService.Api.Tests/SmsMfaNotificationService.Api.Tests.csproj \
     && dotnet publish src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj --output /app/ --configuration Release
 
-FROM mcr.microsoft.com/dotnet/aspnet:6.0.13
+FROM mcr.microsoft.com/dotnet/aspnet:6.0.14
 WORKDIR /app
 COPY --from=builder /app .
 
