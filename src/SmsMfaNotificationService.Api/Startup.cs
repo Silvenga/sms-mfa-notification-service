@@ -13,7 +13,7 @@ namespace SmsMfaNotificationService.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers(o => o.InputFormatters.Insert(o.InputFormatters.Count, new TaskerSmsInputFormatter()));
-            services.AddMediatR(typeof(Startup));
+            services.AddMediatR(configuration => configuration.RegisterServicesFromAssemblyContaining<Startup>());
             services.AddSignalR();
             services.AddHealthChecks();
         }
