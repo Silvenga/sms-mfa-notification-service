@@ -72,5 +72,17 @@ namespace SmsMfaNotificationService.Api.Tests.Parsing
             // Assert
             result.Should().BeFalse();
         }
+
+        [Theory]
+        [InlineData("Thank you for ordering with us at Five Guys. We would love to hear your feedback! https://app.getwisely.com/webviews/surveys/01f927a9-cd5e-444a-bf5e-d1ad90929049?u=01f927a9-cd5e-444a-bf5e-d1ad90929049&m=312500&ut=143072000")]
+        [InlineData("Thank you for ordering with us at Five Guys. We would love to hear your feedback! http://app.getwisely.com/webviews/surveys/01f927a9-cd5e-444a-bf5e-d1ad90929049?u=01f927a9-cd5e-444a-bf5e-d1ad90929049&m=312500&ut=143072000")]
+        public void Given_message_containing_a_url_then_return_false(string input)
+        {
+            // Act
+            var result = MessageParser.TryGetCode(input, out _);
+
+            // Assert
+            result.Should().BeFalse();
+        }
     }
 }

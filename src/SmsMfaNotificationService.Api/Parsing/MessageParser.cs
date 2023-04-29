@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -17,16 +18,27 @@ namespace SmsMfaNotificationService.Api.Parsing
         private static readonly Regex RoadPattern = new(@"\b\d{3,4} [a-z]", RegexOptions.Compiled | RegexOptions.IgnoreCase);
         private static readonly Regex CreditCardPattern = new(@"ending (in )?\d{4}\b", RegexOptions.Compiled);
         private static readonly Regex PhoneNumberPattern = new(@"(\d{3}-){2}\d{4}", RegexOptions.Compiled);
+        private static readonly Regex UrlPattern = new(@"https?://[^ ]*", RegexOptions.Compiled);
 
         public static bool TryGetCode(string input, [NotNullWhen(true)] out string? code)
         {
-            code = default;
-            return !ZipCodePattern.IsMatch(input)
-                   && !RoadPattern.IsMatch(input)
-                   && !CreditCardPattern.IsMatch(input)
-                   && !PhoneNumberPattern.IsMatch(input)
-                   && (TryRegexMatch(GenericPattern, input, out code)
-                       || TryRegexMatch(SeparatedPattern, input, out code));
+            input = Mask(input);
+            return TryRegexMatch(GenericPattern, input, out code)
+                   || TryRegexMatch(SeparatedPattern, input, out code);
+        }
+
+        private static string Mask(string input)
+        {
+            var maskPatterns = new[]
+            {
+                ZipCodePattern,
+                RoadPattern,
+                CreditCardPattern,
+                PhoneNumberPattern,
+                UrlPattern
+            };
+
+            return maskPatterns.Aggregate(input, (current, pattern) => pattern.Replace(current, "XXX"));
         }
 
         private static bool TryRegexMatch(Regex regex, string input, [NotNullWhen(true)] out string? code)
