@@ -25,6 +25,8 @@ namespace SmsMfaNotificationService.Api.Tests.Parsing
         [InlineData("If someone asks for the code, it's a scam. Your code is 0000.", "0000")]
         [InlineData("Example1 000-000", "000000")]
         [InlineData("Example2 000 - 000", "000000")]
+        [InlineData("ADP: To finish signing in, enter 000000. Never share this code with anyone, even if they say they are from ADP. If you did not request it, reply X.", "000000")]
+        [InlineData("Circle verification code: 000000", "000000")]
         public void Given_example_containing_sms_code_then_return_true(string input, string expected)
         {
             // Act
