@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:6.0.408 AS builder
+FROM mcr.microsoft.com/dotnet/sdk:6.0.410 AS builder
 
 WORKDIR /source
 COPY src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj src/SmsMfaNotificationService.Api/SmsMfaNotificationService.Api.csproj
